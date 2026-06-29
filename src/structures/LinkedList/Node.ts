@@ -1,28 +1,28 @@
 export class Node<T> {
-  #element: T;
-  #next: Node<T>;
-  #prev: Node<T>;
+  #element: T | null;
+  #next: Node<T> | null;
+  #prev: Node<T> | null;
 
-  constructor(element: T, next: Node<T>, prev: Node<T>) {
+  constructor(element: T | null, next: Node<T> | null, prev: Node<T> | null) {
     this.#element = element;
     this.#next = next;
     this.#prev = prev;
   }
 
-  get getElement(): T {
+  get element(): T | null {
     return this.#element;
   }
-  get getNext(): Node<T> {
+  get next(): Node<T> | null {
     return this.#next;
   }
-  get getPrev(): Node<T> {
+  get prev(): Node<T> | null {
     return this.#prev;
   }
 
-  set setNext(next: Node<T>) {
+  set next(next: Node<T> | null) {
     this.#next = next;
   }
-  set setPrev(prev: Node<T>) {
+  set prev(prev: Node<T> | null) {
     this.#prev = prev;
   }
 }
