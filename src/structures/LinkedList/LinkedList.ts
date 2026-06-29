@@ -44,6 +44,18 @@ export class LinkedList<T> implements Collection<T> {
       this.#addBetween(element, this.#trailer.prev, this.#trailer);
   }
 
+  #remove(node: Node<T>): T | null {
+    let predecessor: Node<T> | null = node.prev;
+    let successor: Node<T> | null = node.next;
+    if (predecessor && successor) {
+      predecessor.next = successor;
+      successor.prev = predecessor;
+    }
+
+    this.#size--;
+    return node.element;
+  }
+
   #addBetween(element: T, predecessor: Node<T>, successor: Node<T>): void {
     let newNode: Node<T> = new Node<T>(element, predecessor, successor);
     predecessor.next = newNode;
