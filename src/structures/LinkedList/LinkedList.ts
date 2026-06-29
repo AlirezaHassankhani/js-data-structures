@@ -1,12 +1,13 @@
 import { Collection } from "../core/Collection";
 import { Node } from "./Node";
 
-export class LinkedList<T> implements Collection<T> {
+export class LinkedList<T> extends Collection<T> {
   #size: number;
   #header: Node<T>;
   #trailer: Node<T>;
 
   constructor() {
+    super();
     this.#size = 0;
     this.#header = new Node<T>(null, null, null);
     this.#trailer = new Node<T>(null, this.#header, null);
@@ -42,6 +43,20 @@ export class LinkedList<T> implements Collection<T> {
   addLast(element: T): void {
     if (this.#trailer.prev)
       this.#addBetween(element, this.#trailer.prev, this.#trailer);
+  }
+
+  removeFirst(): T | null {
+    if (this.isEmpty) return null;
+
+    if (this.#header.next) return this.#remove(this.#header.next);
+    return null;
+  }
+
+  removeLast(): T | null {
+    if (this.isEmpty) return null;
+
+    if (this.#trailer.prev) return this.#remove(this.#trailer.prev);
+    return null;
   }
 
   #remove(node: Node<T>): T | null {
