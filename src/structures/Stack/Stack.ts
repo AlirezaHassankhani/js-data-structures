@@ -2,11 +2,16 @@ import { Collection } from "../core/Collection";
 
 export class Stack<T> extends Collection<T> {
   #CAPACITY = 1000;
-  #data: (T | null)[] = new Array(this.#CAPACITY).fill(null);
+  #data: (T | null)[];
   #size: number = -1;
 
-  constructor() {
+  constructor(capacity: number) {
     super();
+    let arr;
+    if (capacity) arr = new Array(capacity).fill(null);
+    else arr = new Array(this.#CAPACITY).fill(null);
+
+    this.#data = arr;
   }
 
   get size(): number {
