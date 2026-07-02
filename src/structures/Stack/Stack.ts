@@ -31,6 +31,10 @@ export class Stack<T> extends Collection<T> {
     return target;
   }
 
+  push(element: T) {
+    this.#data[++this.#size] = element;
+  }
+
   clear(): void {
     this.#data = new Array(this.#CAPACITY).fill(null);
     this.#size = -1;
