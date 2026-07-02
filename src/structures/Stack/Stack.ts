@@ -1,4 +1,5 @@
-import { Collection } from "../core/Collection";
+import { Collection } from "../../core/Collection";
+import { EmptyCollectionError, IndexOutOfBoundError } from "../../core/errors";
 
 export class Stack<T> extends Collection<T> {
   #CAPACITY = 1000;
@@ -28,7 +29,8 @@ export class Stack<T> extends Collection<T> {
   }
 
   pop(): T | null {
-    if (this.isEmpty) return null;
+    if (this.isEmpty) throw new EmptyCollectionError();
+
     let target: T | null = this.#data[this.#size];
     this.#data[this.#size] = null;
 
@@ -37,6 +39,8 @@ export class Stack<T> extends Collection<T> {
   }
 
   push(element: T) {
+    if (this.#size === this.#data.length) throw new IndexOutOfBoundError();
+
     this.#data[++this.#size] = element;
   }
 

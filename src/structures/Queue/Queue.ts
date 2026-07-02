@@ -1,4 +1,5 @@
-import { Collection } from "../core/Collection";
+import { Collection } from "../../core/Collection";
+import { EmptyCollectionError, IndexOutOfBoundError } from "../../core/errors";
 
 export class Queue<T> extends Collection<T> {
   #CAPACITY: number = 1000;
@@ -17,7 +18,7 @@ export class Queue<T> extends Collection<T> {
   }
 
   dequeue(): T | null {
-    if (this.isEmpty) return null;
+    if (this.isEmpty) throw new EmptyCollectionError();
 
     let target = this.#data[this.#f];
     this.#data[this.#f] = null;
@@ -28,6 +29,8 @@ export class Queue<T> extends Collection<T> {
   }
 
   enqueue(element: T): void {
+    if (this.#size === this.#data.length) throw new IndexOutOfBoundError();
+
     let avail = (this.#f + this.#size) % this.#data.length;
     this.#data[avail] = element;
 

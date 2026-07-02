@@ -1,4 +1,4 @@
-import { Collection } from "../core/Collection";
+import { Collection } from "../../core/Collection";
 import { Node } from "./Node";
 
 export class LinkedList<T> extends Collection<T> {
