@@ -46,5 +46,9 @@ export class Stack<T> extends Collection<T> {
     this.#data.fill(null);
   }
 
-  *[Symbol.iterator]() {}
+  *[Symbol.iterator](): Iterator<T> {
+    for (let i = this.#size; i > -1; i--) {
+      yield this.#data[i]!;
+    }
+  }
 }
