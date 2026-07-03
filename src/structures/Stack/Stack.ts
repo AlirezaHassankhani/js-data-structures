@@ -12,14 +12,6 @@ export class Stack<T> extends Collection<T> {
     this.#data = new Array(capacity ?? this.#DEFAULT_CAPACITY).fill(null);
   }
 
-  get size(): number {
-    return this.#size + 1;
-  }
-
-  get isEmpty(): boolean {
-    return this.#size === -1;
-  }
-
   top(): T | null {
     if (this.isEmpty) return null;
     return this.#data[this.#size];
@@ -39,6 +31,14 @@ export class Stack<T> extends Collection<T> {
     if (this.#size === this.#data.length) throw new IndexOutOfBoundError();
 
     this.#data[++this.#size] = element;
+  }
+
+  get size(): number {
+    return this.#size + 1;
+  }
+
+  get isEmpty(): boolean {
+    return this.#size === -1;
   }
 
   clear(): void {

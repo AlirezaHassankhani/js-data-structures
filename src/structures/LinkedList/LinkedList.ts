@@ -85,5 +85,12 @@ export class LinkedList<T> extends Collection<T> {
     this.#trailer.prev = this.#header;
   }
 
-  *[Symbol.iterator]() {}
+  *[Symbol.iterator](): Iterator<T> {
+    let current = this.#header.next;
+
+    while (current !== this.#trailer) {
+      yield current?.element!;
+      current = current!.next;
+    }
+  }
 }
