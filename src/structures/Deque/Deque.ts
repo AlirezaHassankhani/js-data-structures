@@ -2,16 +2,15 @@ import { Collection } from "../../core/Collection";
 import { EmptyCollectionError, IndexOutOfBoundError } from "../../core/errors";
 
 export class Deque<T> extends Collection<T> {
-  #CAPACITY: number = 1000;
+  readonly #DEFAULT_CAPACITY: number = 1000;
   #data: (T | null)[];
   #size: number = 0;
   #f: number = 0;
 
-  constructor(capacity: number) {
+  constructor(capacity?: number) {
     super();
 
-    if (capacity) this.#data = new Array(capacity).fill(null);
-    else this.#data = new Array(this.#CAPACITY).fill(null);
+    this.#data = new Array(capacity ?? this.#DEFAULT_CAPACITY).fill(null);
   }
 
   addFirst(element: T): void {
@@ -57,12 +56,12 @@ export class Deque<T> extends Collection<T> {
   }
 
   first(): T | null {
-    if (this.isEmpty) throw new IndexOutOfBoundError();
+    if (this.isEmpty) throw new EmptyCollectionError();
     return this.#data[this.#f];
   }
 
   last(): T | null {
-    if (this.isEmpty) throw new IndexOutOfBoundError();
+    if (this.isEmpty) throw new EmptyCollectionError();
     const avail = (this.#f + this.#size - 1) % this.#data.length;
     return this.#data[avail];
   }
@@ -77,6 +76,8 @@ export class Deque<T> extends Collection<T> {
 
   clear(): void {
     this.#size = 0;
+    this.#f = 0;
+    this.#data.fill(null);
   }
 
   *[Symbol.iterator]() {}

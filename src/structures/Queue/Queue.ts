@@ -52,6 +52,8 @@ export class Queue<T> extends Collection<T> {
 
   clear(): void {
     this.#size = 0;
+    this.#f = 0;
+    this.#data.fill(null);
   }
 
   *[Symbol.iterator]() {}
