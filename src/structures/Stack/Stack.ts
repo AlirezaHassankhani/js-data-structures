@@ -2,17 +2,14 @@ import { Collection } from "../../core/Collection";
 import { EmptyCollectionError, IndexOutOfBoundError } from "../../core/errors";
 
 export class Stack<T> extends Collection<T> {
-  #CAPACITY = 1000;
+  readonly #DEFAULT_CAPACITY: number = 1000;
   #data: (T | null)[];
   #size: number = -1;
 
-  constructor(capacity: number) {
+  constructor(capacity?: number) {
     super();
-    let arr;
-    if (capacity) arr = new Array(capacity).fill(null);
-    else arr = new Array(this.#CAPACITY).fill(null);
 
-    this.#data = arr;
+    this.#data = new Array(capacity ?? this.#DEFAULT_CAPACITY).fill(null);
   }
 
   get size(): number {
@@ -45,8 +42,8 @@ export class Stack<T> extends Collection<T> {
   }
 
   clear(): void {
-    this.#data = new Array(this.#CAPACITY).fill(null);
     this.#size = -1;
+    this.#data.fill(null);
   }
 
   *[Symbol.iterator]() {}

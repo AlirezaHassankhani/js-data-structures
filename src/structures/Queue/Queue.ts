@@ -2,19 +2,15 @@ import { Collection } from "../../core/Collection";
 import { EmptyCollectionError, IndexOutOfBoundError } from "../../core/errors";
 
 export class Queue<T> extends Collection<T> {
-  #CAPACITY: number = 1000;
+  readonly #DEFAULT_CAPACITY: number = 1000;
   #data: (T | null)[];
   #size: number = 0;
   #f: number = 0;
 
-  constructor(capacity: number) {
+  constructor(capacity?: number) {
     super();
 
-    let arr;
-    if (capacity) arr = new Array(capacity).fill(null);
-    else arr = new Array(this.#CAPACITY).fill(null);
-
-    this.#data = arr;
+    this.#data = new Array(capacity ?? this.#DEFAULT_CAPACITY).fill(null);
   }
 
   dequeue(): T | null {
