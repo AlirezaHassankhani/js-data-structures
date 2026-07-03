@@ -80,5 +80,10 @@ export class Deque<T> extends Collection<T> {
     this.#data.fill(null);
   }
 
-  *[Symbol.iterator]() {}
+  *[Symbol.iterator](): Iterator<T> {
+    for (let i = 0; this.#size > i; i++) {
+      const avail = (this.#f + i) % this.#data.length;
+      yield this.#data[avail]!;
+    }
+  }
 }
