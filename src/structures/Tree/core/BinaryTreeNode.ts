@@ -1,4 +1,4 @@
-import { Position } from "../core/AbstractTree";
+import { Position } from "./AbstractTree";
 
 export class BinaryTreeNode<E> implements Position<E> {
   #element: E;
@@ -23,13 +23,13 @@ export class BinaryTreeNode<E> implements Position<E> {
     return this.#element;
   }
 
-  get parent() {
+  get parent(): BinaryTreeNode<E> | null {
     return this.#parent;
   }
-  get left() {
+  get left(): BinaryTreeNode<E> | null {
     return this.#left;
   }
-  get right() {
+  get right(): BinaryTreeNode<E> | null {
     return this.#right;
   }
 

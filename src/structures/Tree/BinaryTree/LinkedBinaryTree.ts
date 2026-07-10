@@ -2,27 +2,28 @@ import {
   IllegalArgumentException,
   IllegalStateException,
 } from "../../../core/errors";
-import { AbstractTree, Position } from "../core/AbstractTree";
-import { BinaryTreeNode } from "./BinaryTreeNode";
+import { Position } from "../core/AbstractTree";
+import { BinaryTreeNode } from "../core/BinaryTreeNode";
+import { AbstractBinaryTree } from "./AbstractBinaryTree";
 
-export class BinaryTree<E> extends AbstractTree<E> {
-  #root: BinaryTreeNode<E> | null = null;
+export class LinkedBinaryTree<T> extends AbstractBinaryTree<T> {
+  #root: BinaryTreeNode<T> | null = null;
   #size: number = 0;
 
-  createNode(
-    element: E,
-    parent: BinaryTreeNode<E> | null,
-    left: BinaryTreeNode<E> | null,
-    right: BinaryTreeNode<E> | null,
-  ): BinaryTreeNode<E> {
+  protected createNode(
+    element: T,
+    parent: BinaryTreeNode<T> | null,
+    left: BinaryTreeNode<T> | null,
+    right: BinaryTreeNode<T> | null,
+  ): BinaryTreeNode<T> {
     return new BinaryTreeNode(element, parent, left, right);
   }
 
-  validate(p: Position<E>): BinaryTreeNode<E> {
+  protected validate(p: Position<T>): BinaryTreeNode<T> {
     if (!(p instanceof BinaryTreeNode))
       throw new IllegalArgumentException("Not valid position type");
 
-    let node: BinaryTreeNode<E> = p;
+    let node: BinaryTreeNode<T> = p;
 
     if (node.parent == node)
       throw new IllegalArgumentException("p is no longer in the tree");
@@ -30,35 +31,27 @@ export class BinaryTree<E> extends AbstractTree<E> {
     return node;
   }
 
-  root(): Position<E> | null {
+  root(): Position<T> | null {
     return this.#root;
   }
 
-  children(p: Position<E>): Iterable<Position<E>> {
-    let snapshot: Position<E>[] = new Array(2);
-    let left = this.left(p);
-    let right = this.right(p);
+  
 
-    if (left != null) snapshot.push(left);
-    if (right != null) snapshot.push(right);
-
-    return snapshot;
-  }
-
-  parent(p: Position<E>) {
-    let node: BinaryTreeNode<E> = this.validate(p);
+  parent(p: Position<T>): Position<T> | null {
+    let node: BinaryTreeNode<T> = this.validate(p);
     return node.parent;
   }
-  left(p: Position<E>) {
-    let node: BinaryTreeNode<E> = this.validate(p);
+
+  left(p: Position<T>) {
+    let node: BinaryTreeNode<T> = this.validate(p);
     return node.left;
   }
-  right(p: Position<E>) {
-    let node: BinaryTreeNode<E> = this.validate(p);
+  right(p: Position<T>) {
+    let node: BinaryTreeNode<T> = this.validate(p);
     return node.right;
   }
 
-  addRoot(element: E): Position<E> {
+  addRoot(element: T): Position<T> {
     if (!this.isEmpty) throw new IllegalStateException("Tree is not empty");
     this.#root = this.createNode(element, null, null, null);
     this.#size = 1;
@@ -66,7 +59,7 @@ export class BinaryTree<E> extends AbstractTree<E> {
     return this.#root;
   }
 
-  addLeft(p: Position<E>, element: E): Position<E> {
+  addLeft(p: Position<T>, element: T): Position<T> {
     let parent = this.validate(p);
 
     if (parent.left !== null)
@@ -80,7 +73,7 @@ export class BinaryTree<E> extends AbstractTree<E> {
     return child;
   }
 
-  addRight(p: Position<E>, element: E): Position<E> {
+  addRight(p: Position<T>, element: T): Position<T> {
     let parent = this.validate(p);
 
     if (parent.right !== null)
@@ -94,7 +87,7 @@ export class BinaryTree<E> extends AbstractTree<E> {
     return child;
   }
 
-  set(p: Position<E>, element: E) {
+  set(p: Position<T>, element: T): T {
     let node = this.validate(p);
 
     let temp = node.element;
@@ -102,15 +95,8 @@ export class BinaryTree<E> extends AbstractTree<E> {
     return temp;
   }
 
-  numChildren(p: Position<E>): number {
-    let count = 0;
-    if (this.left(p) != null) count++;
-    if (this.right(p) != null) count++;
 
-    return count;
-  }
-
-  remove(p: Position<E>): E {
+  remove(p: Position<T>): T {
     let node = this.validate(p);
 
     if (this.numChildren(p) === 2)
@@ -120,7 +106,7 @@ export class BinaryTree<E> extends AbstractTree<E> {
 
     if (child != null) child.parent = node.parent;
 
-    if (node == this.#root)
+    if (node === this.#root)
       this.#root = child; // if node is root
     else {
       let parent = node.parent!;
@@ -141,8 +127,9 @@ export class BinaryTree<E> extends AbstractTree<E> {
   }
 
   clear() {
+    this.#root = null;
     this.#size = 0;
   }
 
-  *[Symbol.iterator](): Iterator<E> {}
+  *[Symbol.iterator](): Iterator<T> {}
 }

@@ -1,3 +1,3 @@
-import { BinaryTree } from "./BinaryTree/BinaryTree";
+import { LinkedBinaryTree } from "./BinaryTree/LinkedBinaryTree";
 
-export { BinaryTree };
+export { LinkedBinaryTree };
