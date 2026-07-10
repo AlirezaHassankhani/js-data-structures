@@ -35,8 +35,6 @@ export class LinkedBinaryTree<T> extends AbstractBinaryTree<T> {
     return this.#root;
   }
 
-  
-
   parent(p: Position<T>): Position<T> | null {
     let node: BinaryTreeNode<T> = this.validate(p);
     return node.parent;
