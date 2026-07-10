@@ -34,6 +34,17 @@ export class BinaryTree<E> extends AbstractTree<E> {
     return this.#root;
   }
 
+  children(p: Position<E>): Iterable<Position<E>> {
+    let snapshot: Position<E>[] = new Array(2);
+    let left = this.left(p);
+    let right = this.right(p);
+
+    if (left != null) snapshot.push(left);
+    if (right != null) snapshot.push(right);
+
+    return snapshot;
+  }
+
   parent(p: Position<E>) {
     let node: BinaryTreeNode<E> = this.validate(p);
     return node.parent;
@@ -133,7 +144,5 @@ export class BinaryTree<E> extends AbstractTree<E> {
     this.#size = 0;
   }
 
-  *[Symbol.iterator](): Iterator<E> {
-    
-  }
+  *[Symbol.iterator](): Iterator<E> {}
 }
