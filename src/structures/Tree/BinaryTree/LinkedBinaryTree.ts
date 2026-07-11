@@ -40,11 +40,12 @@ export class LinkedBinaryTree<T> extends AbstractBinaryTree<T> {
     return node.parent;
   }
 
-  left(p: Position<T>) {
+  left(p: Position<T>): Position<T> | null {
     let node: BinaryTreeNode<T> = this.validate(p);
     return node.left;
   }
-  right(p: Position<T>) {
+
+  right(p: Position<T>): Position<T> | null {
     let node: BinaryTreeNode<T> = this.validate(p);
     return node.right;
   }
@@ -93,7 +94,6 @@ export class LinkedBinaryTree<T> extends AbstractBinaryTree<T> {
     return temp;
   }
 
-
   remove(p: Position<T>): T {
     let node = this.validate(p);
 
@@ -108,7 +108,7 @@ export class LinkedBinaryTree<T> extends AbstractBinaryTree<T> {
       this.#root = child; // if node is root
     else {
       let parent = node.parent!;
-      if (node == parent.left) parent.left = child;
+      if (node === parent.left) parent.left = child;
       else parent.right = child;
     }
 
