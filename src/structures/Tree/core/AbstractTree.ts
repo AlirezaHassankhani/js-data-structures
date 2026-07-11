@@ -21,4 +21,17 @@ export abstract class AbstractTree<E> extends Collection<E> {
   isRoot(p: Position<E>): boolean {
     return p === this.root();
   }
+
+  depth(p: Position<E>): number {
+    if (this.isRoot(p)) return 0;
+    else return 1 + this.depth(this.parent(p)!);
+  }
+
+  height(p: Position<E>): number {
+    let h = 0;
+
+    for (let c of this.children(p)) h = Math.max(h, 1 + this.height(c));
+
+    return h;
+  }
 }
