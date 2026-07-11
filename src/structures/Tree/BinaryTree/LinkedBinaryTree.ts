@@ -2,9 +2,9 @@ import {
   IllegalArgumentException,
   IllegalStateException,
 } from "../../../core/errors";
-import { Position } from "../core/AbstractTree";
-import { BinaryTreeNode } from "../core/BinaryTreeNode";
-import { AbstractBinaryTree } from "./AbstractBinaryTree";
+import { Position } from "../core/Position";
+import { BinaryTreeNode } from "./BinaryTreeNode";
+import { AbstractBinaryTree } from "../core/AbstractBinaryTree";
 
 export class LinkedBinaryTree<T> extends AbstractBinaryTree<T> {
   #root: BinaryTreeNode<T> | null = null;

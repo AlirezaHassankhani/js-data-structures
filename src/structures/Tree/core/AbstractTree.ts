@@ -1,8 +1,5 @@
 import { Collection } from "../../../core/Collection";
-
-export interface Position<E> {
-  get element(): E;
-}
+import { Position } from "./Position";
 
 export abstract class AbstractTree<E> extends Collection<E> {
   abstract numChildren(p: Position<E>): number;
