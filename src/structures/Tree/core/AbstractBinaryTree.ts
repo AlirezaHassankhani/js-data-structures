@@ -6,12 +6,12 @@ export abstract class AbstractBinaryTree<T> extends AbstractTree<T> {
   abstract right(p: Position<T>): Position<T> | null;
 
   children(p: Position<T>): Iterable<Position<T>> {
-    let snapshot: Position<T>[] = [];
-    let left = this.left(p);
-    let right = this.right(p);
+    const snapshot: Position<T>[] = [];
+    const left = this.left(p);
+    const right = this.right(p);
 
-    if (left != null) snapshot.push(left);
-    if (right != null) snapshot.push(right);
+    if (left !== null) snapshot.push(left);
+    if (right !== null) snapshot.push(right);
 
     return snapshot;
   }
@@ -28,10 +28,29 @@ export abstract class AbstractBinaryTree<T> extends AbstractTree<T> {
   }
 
   sibling(p: Position<T>): Position<T> | null {
-    let parent = this.parent(p);
+    const parent = this.parent(p);
 
-    if (parent == null) return null;
-    if (p == this.left(p)) return this.right(p);
+    if (parent === null) return null;
+    if (p === this.left(parent)) return this.right(parent);
     else return this.left(parent);
+  }
+
+  #inorderSubtree(p: Position<T>, snapshot: Position<T>[]) {
+    const left = this.left(p);
+    const right = this.right(p);
+
+    if (left) this.#inorderSubtree(left, snapshot);
+    snapshot.push(p);
+    if (right) this.#inorderSubtree(right, snapshot);
+  }
+
+  inorder(): Iterable<Position<T>> {
+    const root = this.root();
+
+    const snapshot: Position<T>[] = [];
+
+    if (root !== null) this.#inorderSubtree(root, snapshot);
+
+    return snapshot;
   }
 }
