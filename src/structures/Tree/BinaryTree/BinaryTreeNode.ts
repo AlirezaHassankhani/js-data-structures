@@ -1,4 +1,4 @@
-import { Position } from "./AbstractTree";
+import { Position } from "../core/Position";
 
 export class BinaryTreeNode<E> implements Position<E> {
   #element: E;

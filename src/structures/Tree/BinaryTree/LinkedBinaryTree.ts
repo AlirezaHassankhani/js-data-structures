@@ -129,5 +129,9 @@ export class LinkedBinaryTree<T> extends AbstractBinaryTree<T> {
     this.#size = 0;
   }
 
-  *[Symbol.iterator](): Iterator<T> {}
+  *[Symbol.iterator](): Iterator<T> {
+    for (const p of this.inorder()) {
+      yield p.element;
+    }
+  }
 }
