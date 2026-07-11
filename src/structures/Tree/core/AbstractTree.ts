@@ -34,9 +34,7 @@ export abstract class AbstractTree<E> extends Collection<E> {
 
   #preorderSubtree(p: Position<E>, snapshot: Position<E>[]): void {
     snapshot.push(p);
-    for (let c of this.children(p)) {
-      this.#preorderSubtree(c, snapshot);
-    }
+    for (const c of this.children(p)) this.#preorderSubtree(c, snapshot);
   }
 
   preorder(): Iterable<Position<E>> {
@@ -45,6 +43,22 @@ export abstract class AbstractTree<E> extends Collection<E> {
     const snapshot: Position<E>[] = [];
 
     if (root !== null) this.#preorderSubtree(root, snapshot);
+
+    return snapshot;
+  }
+
+  #postorderSubtree(p: Position<E>, snapshot: Position<E>[]): void {
+    for (const c of this.children(p)) this.#postorderSubtree(c, snapshot);
+
+    snapshot.push(p);
+  }
+
+  postorder(): Iterable<Position<E>> {
+    const root = this.root();
+
+    const snapshot: Position<E>[] = [];
+
+    if (root !== null) this.#postorderSubtree(root, snapshot);
 
     return snapshot;
   }
