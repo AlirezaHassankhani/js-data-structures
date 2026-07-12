@@ -33,4 +33,8 @@ export class LinkedTreeNode<E> implements Position<E> {
   set parent(arr: LinkedTreeNode<E>) {
     this.#parent = arr;
   }
+
+  addToChild(p: LinkedTreeNode<E>) {
+    this.#children.push(p);
+  }
 }

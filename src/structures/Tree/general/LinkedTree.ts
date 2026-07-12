@@ -35,6 +35,23 @@ export class LinkedTree<T> extends AbstractTree<T> {
     return this.#root;
   }
 
+  set(p: Position<T>, element: T): T {
+    let node = this.validate(p);
+
+    let temp = node.element;
+    node.element = element;
+    return temp;
+  }
+
+  addChildren(p: Position<T>, element: T): Position<T> {
+    const parent = this.validate(p);
+    const node = new LinkedTreeNode(element, parent, []);
+    parent.addToChild(node);
+
+    this.#size++;
+    return node;
+  }
+
   get size(): number {
     return this.#size;
   }
