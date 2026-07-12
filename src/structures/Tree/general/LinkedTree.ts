@@ -1,4 +1,4 @@
-import { IllegalArgumentException } from "../../../core/errors";
+import { IllegalArgumentException, IllegalStateException } from "../../../core/errors";
 import { AbstractTree } from "../core/AbstractTree";
 import { Position } from "../core/Position";
 import { LinkedTreeNode } from "./LinkedTreeNode";
@@ -35,6 +35,16 @@ export class LinkedTree<T> extends AbstractTree<T> {
     return this.#root;
   }
 
+  addRoot(element: T): Position<T> {
+    if (this.#root !== null)
+      throw new IllegalStateException("Tree is not empty");
+
+    this.#root = new LinkedTreeNode(element, null, []);
+    this.#size = 1;
+
+    return this.#root;
+  }
+
   set(p: Position<T>, element: T): T {
     let node = this.validate(p);
 
@@ -43,10 +53,10 @@ export class LinkedTree<T> extends AbstractTree<T> {
     return temp;
   }
 
-  addChildren(p: Position<T>, element: T): Position<T> {
+  appendChild(p: Position<T>, element: T): Position<T> {
     const parent = this.validate(p);
     const node = new LinkedTreeNode(element, parent, []);
-    parent.addToChild(node);
+    parent.addChild(node);
 
     this.#size++;
     return node;
