@@ -22,7 +22,7 @@ export class LinkedTreeNode<E> implements Position<E> {
   get parent(): LinkedTreeNode<E> | null {
     return this.#parent;
   }
-  get children(): LinkedTreeNode<E>[] {
+  get children(): Position<E>[] {
     return this.#children;
   }
 
