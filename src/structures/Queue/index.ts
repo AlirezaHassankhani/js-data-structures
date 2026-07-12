@@ -1,3 +1,4 @@
-import { Queue } from "./Queue";
+import { Queue } from "./Queue/Queue";
+import { Deque } from "./Deque/Deque";
 
-export { Queue };
+export { Queue, Deque };
