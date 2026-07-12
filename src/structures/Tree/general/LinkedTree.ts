@@ -101,6 +101,4 @@ export class LinkedTree<T> extends AbstractTree<T> {
     this.#size = 0;
     this.#root = null;
   }
-
-  *[Symbol.iterator](): Iterator<T> {}
 }

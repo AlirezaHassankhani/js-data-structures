@@ -62,4 +62,10 @@ export abstract class AbstractTree<E> extends Collection<E> {
 
     return snapshot;
   }
+
+  *[Symbol.iterator](): Iterator<E> {
+    for (const p of this.preorder()) {
+      yield p.element;
+    }
+  }
 }
