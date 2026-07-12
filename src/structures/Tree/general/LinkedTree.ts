@@ -1,4 +1,7 @@
-import { IllegalArgumentException, IllegalStateException } from "../../../core/errors";
+import {
+  IllegalArgumentException,
+  IllegalStateException,
+} from "../../../core/errors";
 import { AbstractTree } from "../core/AbstractTree";
 import { Position } from "../core/Position";
 import { LinkedTreeNode } from "./LinkedTreeNode";
@@ -60,6 +63,34 @@ export class LinkedTree<T> extends AbstractTree<T> {
 
     this.#size++;
     return node;
+  }
+
+  remove(p: Position<T>): T {
+    const node = this.validate(p);
+
+    if (node.parent) {
+      const children = node.parent.children;
+      const index = children.indexOf(node);
+
+      if (index !== -1) children.splice(index, 1);
+    } else {
+      this.#root = null;
+    }
+
+    const removed = this.subtreeSize(node);
+    this.#size -= removed;
+
+    node.parent = node;
+
+    return node.element;
+  }
+
+  private subtreeSize(node: LinkedTreeNode<T>): number {
+    let count = 1;
+
+    for (const child of node.children) count += this.subtreeSize(child);
+
+    return count;
   }
 
   get size(): number {
