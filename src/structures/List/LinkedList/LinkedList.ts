@@ -2,13 +2,12 @@ import { Collection } from "../../../core/Collection";
 import { Node } from "../core/Node";
 
 export class LinkedList<T> extends Collection<T> {
-  #size: number;
+  #size: number = 0;
   #header: Node<T>;
   #trailer: Node<T>;
 
   constructor() {
     super();
-    this.#size = 0;
     this.#header = new Node<T>(null, null, null);
     this.#trailer = new Node<T>(null, this.#header, null);
 

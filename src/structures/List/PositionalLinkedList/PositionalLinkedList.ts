@@ -97,11 +97,19 @@ export class PositionalLinkedList<T> extends Collection<T> {
 
     this.#size--;
     const answer = node.element;
-    
+
     node.element = null;
     node.next = null;
     node.prev = null;
 
+    return answer;
+  }
+
+  set(p: Position<T>, element: T): T | null {
+    const node = this.validate(p);
+    const answer = node.element;
+
+    node.element = element;
     return answer;
   }
 
