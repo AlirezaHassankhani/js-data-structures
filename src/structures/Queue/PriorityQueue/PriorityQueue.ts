@@ -1,5 +1,6 @@
 import { Collection } from "../../../core/Collection";
 import { Comparator } from "../../../core/Comparator";
+import { IllegalArgumentException } from "../../../core/errors";
 import { PQEntry } from "./PQEntry";
 
 export class PriorityQueue<K, V>
@@ -16,6 +17,14 @@ export class PriorityQueue<K, V>
 
   compare(a: PQEntry<K, V>, b: PQEntry<K, V>): number {
     return this.#comp.compare(a.key, b.key);
+  }
+
+  #checkKey(key: K) {
+    try {
+      return this.#comp.compare(key, key);
+    } catch (e) {
+      throw new IllegalArgumentException("Incompatible key");
+    }
   }
 
   clear(): void {
