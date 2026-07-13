@@ -1,4 +1,6 @@
-export class Node<T> {
+import { Position } from "../../../core/Position";
+
+export class Node<T> implements Position<T | null> {
   #element: T | null;
   #next: Node<T> | null;
   #prev: Node<T> | null;
@@ -9,7 +11,7 @@ export class Node<T> {
     this.#prev = prev;
   }
 
-  get element(): T | null {
+  get element() {
     return this.#element;
   }
   get next(): Node<T> | null {
