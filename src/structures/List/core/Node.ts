@@ -27,4 +27,7 @@ export class Node<T> implements Position<T | null> {
   set prev(prev: Node<T> | null) {
     this.#prev = prev;
   }
+  set element(e: T | null) {
+    this.#element = e;
+  }
 }

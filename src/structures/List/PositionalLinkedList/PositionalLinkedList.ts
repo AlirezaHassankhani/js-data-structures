@@ -16,11 +16,11 @@ export class PositionalLinkedList<T> extends Collection<T> {
     this.#header.next = this.#trailer;
   }
 
-  first(): Position<T> {
+  first(): Position<T> | null {
     return this.position(this.#header.next!);
   }
 
-  last(): Position<T> {
+  last(): Position<T> | null {
     return this.position(this.#trailer.prev!);
   }
 
@@ -78,29 +78,31 @@ export class PositionalLinkedList<T> extends Collection<T> {
     return node;
   }
 
-  private position(p: Node<T>): Position<T> {
+  private position(p: Node<T>): Position<T> | null {
     if (p === this.#header || p === this.#trailer) return null;
 
     return p;
   }
 
-  removeLast(): T | null {
-    if (this.isEmpty) return null;
+  remove(p: Position<T>): T | null {
+    const node = this.validate(p);
 
-    if (this.#trailer.prev) return this.#remove(this.#trailer.prev);
-    return null;
-  }
+    let predecessor = node.prev;
+    let successor = node.next;
 
-  #remove(node: Node<T>): T | null {
-    let predecessor: Node<T> | null = node.prev;
-    let successor: Node<T> | null = node.next;
     if (predecessor && successor) {
       predecessor.next = successor;
       successor.prev = predecessor;
     }
 
     this.#size--;
-    return node.element;
+    const answer = node.element;
+    
+    node.element = null;
+    node.next = null;
+    node.prev = null;
+
+    return answer;
   }
 
   get size(): number {
