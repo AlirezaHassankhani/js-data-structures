@@ -1,5 +1,5 @@
 import { Collection } from "../../../core/Collection";
-import { Position } from "./Position";
+import { Position } from "../../../core/Position";
 
 export abstract class AbstractTree<E> extends Collection<E> {
   abstract numChildren(p: Position<E>): number;

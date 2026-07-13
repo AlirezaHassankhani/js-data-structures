@@ -1,5 +1,5 @@
 import { AbstractTree } from "../core/AbstractTree";
-import { Position } from "./Position";
+import { Position } from "../../../core/Position";
 
 export abstract class AbstractBinaryTree<T> extends AbstractTree<T> {
   abstract left(p: Position<T>): Position<T> | null;

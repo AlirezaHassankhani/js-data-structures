@@ -1,4 +1,4 @@
-import { Position } from "../core/Position";
+import { Position } from "../../../core/Position";
 
 export class LinkedTreeNode<E> implements Position<E> {
   #element: E;

@@ -3,7 +3,7 @@ import {
   IllegalStateException,
 } from "../../../core/errors";
 import { AbstractTree } from "../core/AbstractTree";
-import { Position } from "../core/Position";
+import { Position } from "../../../core/Position";
 import { LinkedTreeNode } from "./LinkedTreeNode";
 
 export class LinkedTree<T> extends AbstractTree<T> {

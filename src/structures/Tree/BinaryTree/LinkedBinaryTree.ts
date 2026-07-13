@@ -2,7 +2,7 @@ import {
   IllegalArgumentException,
   IllegalStateException,
 } from "../../../core/errors";
-import { Position } from "../core/Position";
+import { Position } from "../../../core/Position";
 import { BinaryTreeNode } from "./BinaryTreeNode";
 import { AbstractBinaryTree } from "../core/AbstractBinaryTree";
 
