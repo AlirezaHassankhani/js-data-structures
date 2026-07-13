@@ -1,5 +1,5 @@
-import { Collection } from "../../core/Collection";
-import { Node } from "./Node";
+import { Collection } from "../../../core/Collection";
+import { Node } from "../core/Node";
 
 export class LinkedList<T> extends Collection<T> {
   #size: number;
