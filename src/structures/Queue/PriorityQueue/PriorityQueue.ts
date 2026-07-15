@@ -40,6 +40,24 @@ export class PriorityQueue<K, V>
     return small;
   }
 
+  insert(key: K, value: V): PQEntry<K, V> {
+    this.#checkKey(key);
+
+    const entry = new PQEntry(key, value);
+    this.#list.addLast(entry);
+    return entry;
+  }
+
+  min(): PQEntry<K, V> | null {
+    if (this.isEmpty) return null;
+    return this.#findMin()?.element!;
+  }
+
+  removeMin(): PQEntry<K, V> | null {
+    if (this.isEmpty) return null;
+    return this.#list.remove(this.#findMin()!);
+  }
+
   clear(): void {
     this.#size = 0;
   }
