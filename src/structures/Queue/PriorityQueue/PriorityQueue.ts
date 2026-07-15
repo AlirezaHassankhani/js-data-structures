@@ -3,6 +3,7 @@ import { Comparator } from "../../../core/Comparator";
 import { IllegalArgumentException } from "../../../core/errors";
 import { Position } from "../../../core/Position";
 import { PositionalLinkedList } from "../../List";
+import { Node } from "../../List/core/Node";
 import { PQEntry } from "./PQEntry";
 
 export class PriorityQueue<K, V>
@@ -66,5 +67,7 @@ export class PriorityQueue<K, V>
     return this.#size;
   }
 
-  *[Symbol.iterator](): Iterator<PQEntry<K, V>> {}
+  *[Symbol.iterator](): Iterator<PQEntry<K, V>> {
+    for (const walk of this.#list) yield walk;
+  }
 }
