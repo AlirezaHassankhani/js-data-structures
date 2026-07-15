@@ -1,6 +1,8 @@
 import { Collection } from "../../../core/Collection";
 import { Comparator } from "../../../core/Comparator";
 import { IllegalArgumentException } from "../../../core/errors";
+import { Position } from "../../../core/Position";
+import { PositionalLinkedList } from "../../List";
 import { PQEntry } from "./PQEntry";
 
 export class PriorityQueue<K, V>
@@ -9,6 +11,7 @@ export class PriorityQueue<K, V>
 {
   #size: number = 0;
   #comp: Comparator<K>;
+  #list = new PositionalLinkedList<PQEntry<K, V>>();
 
   constructor(c: Comparator<K>) {
     super();
@@ -25,6 +28,16 @@ export class PriorityQueue<K, V>
     } catch (e) {
       throw new IllegalArgumentException("Incompatible key");
     }
+  }
+
+  #findMin(): Position<PQEntry<K, V>> | null {
+    let small = this.#list.first();
+    let a = this.#list.positions();
+
+    for (const walk of a)
+      if (this.compare(walk?.element!, small?.element!) < 0) small = walk;
+
+    return small;
   }
 
   clear(): void {

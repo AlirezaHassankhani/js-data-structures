@@ -113,6 +113,16 @@ export class PositionalLinkedList<T> extends Collection<T> {
     return answer;
   }
 
+  *positions() {
+    let current = this.#header.next;
+
+    while (current !== this.#trailer) {
+      const p: Position<T> | null = current;
+      yield p;
+      current = current!.next;
+    }
+  }
+
   get size(): number {
     return this.#size;
   }
