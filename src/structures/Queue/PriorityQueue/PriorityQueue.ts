@@ -39,8 +39,8 @@ export class PriorityQueue<K, V>
 
   insert(key: K, value: V): PQEntry<K, V> {
     this.#checkKey(key);
-
     const entry = new PQEntry(key, value);
+    
     this.#list.addLast(entry);
     return entry;
   }

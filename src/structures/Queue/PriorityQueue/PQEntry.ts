@@ -16,10 +16,6 @@ export class PQEntry<K, V> {
   }
 
   //setter
-  set key(k: K) {
-    this.#key = k;
-  }
-
   set value(v: V) {
     this.#value = v;
   }
