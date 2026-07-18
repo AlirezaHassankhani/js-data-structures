@@ -5,7 +5,7 @@ export class HeapPriorityQueue<K, V> extends AbstractPriorityQueue<K, V> {
   #heap: PQEntry<K, V>[] = [];
 
   protected parent(j: number): number {
-    return (j - 1) / 2;
+    return Math.floor((j - 1) / 2);
   }
   protected left(j: number): number {
     return 2 * j + 1;
@@ -22,10 +22,7 @@ export class HeapPriorityQueue<K, V> extends AbstractPriorityQueue<K, V> {
   }
 
   protected swap(i: number, j: number): void {
-    const temp = this.#heap[i];
-
-    this.#heap[i] = this.#heap[j];
-    this.#heap[j] = temp;
+    [this.#heap[i], this.#heap[j]] = [this.#heap[j], this.#heap[i]];
   }
 
   protected upHeap(i: number): void {
@@ -53,8 +50,34 @@ export class HeapPriorityQueue<K, V> extends AbstractPriorityQueue<K, V> {
     }
   }
 
+  min(): PQEntry<K, V> | null {
+    if (this.isEmpty) return null;
+    return this.#heap[0];
+  }
+
+  insert(key: K, value: V): PQEntry<K, V> {
+    this.checkKey(key);
+    const entry = new PQEntry(key, value);
+    this.#heap.push(entry);
+    this.upHeap(this.size - 1);
+
+    return entry;
+  }
+
+  removeMin(): PQEntry<K, V> | null {
+    if (this.isEmpty) return null;
+    const entry = this.#heap[0];
+    this.swap(0, this.size - 1);
+
+    this.#heap.pop();
+
+    if (!this.isEmpty) this.downHeap(0);
+
+    return entry;
+  }
+
   clear(): void {
-    this.#heap = [];
+    this.#heap.length = 0;
   }
 
   get size(): number {
