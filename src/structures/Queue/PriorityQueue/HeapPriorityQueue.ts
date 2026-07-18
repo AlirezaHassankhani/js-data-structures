@@ -1,8 +1,19 @@
+import { Comparator } from "../../../core/Comparator";
 import { AbstractPriorityQueue } from "./core/AbstractPriorityQueue";
 import { PQEntry } from "./core/PQEntry";
 
 export class HeapPriorityQueue<K, V> extends AbstractPriorityQueue<K, V> {
   #heap: PQEntry<K, V>[] = [];
+
+  constructor(
+    c: Comparator<K>,
+    entries: PQEntry<K, V>[]
+) {
+    super(c);
+
+    this.#heap = [...entries];
+    this.heapify();
+}
 
   protected parent(j: number): number {
     return Math.floor((j - 1) / 2);
@@ -75,6 +86,11 @@ export class HeapPriorityQueue<K, V> extends AbstractPriorityQueue<K, V> {
 
     return entry;
   }
+
+  protected heapify(): void {
+    for (let i = this.parent(this.size - 1); i >= 0; i--)
+        this.downHeap(i);
+}
 
   clear(): void {
     this.#heap.length = 0;
