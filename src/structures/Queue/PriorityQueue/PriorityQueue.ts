@@ -7,9 +7,7 @@ import { PQEntry } from "./PQEntry";
 
 export class PriorityQueue<K, V>
   extends Collection<PQEntry<K, V>>
-  implements Comparator<PQEntry<K, V>>
 {
-  #size: number = 0;
   #comp: Comparator<K>;
   #list = new PositionalLinkedList<PQEntry<K, V>>();
 
@@ -18,7 +16,7 @@ export class PriorityQueue<K, V>
     this.#comp = c;
   }
 
-  compare(a: PQEntry<K, V>, b: PQEntry<K, V>): number {
+  protected compare(a: PQEntry<K, V>, b: PQEntry<K, V>): number {
     return this.#comp.compare(a.key, b.key);
   }
 
@@ -32,9 +30,8 @@ export class PriorityQueue<K, V>
 
   #findMin(): Position<PQEntry<K, V>> | null {
     let small = this.#list.first();
-    let a = this.#list.positions();
 
-    for (const walk of a)
+    for (const walk of this.#list.positions())
       if (this.compare(walk?.element!, small?.element!) < 0) small = walk;
 
     return small;
@@ -59,11 +56,11 @@ export class PriorityQueue<K, V>
   }
 
   clear(): void {
-    this.#size = 0;
+    this.#list.clear();
   }
 
   get size(): number {
-    return this.#size;
+    return this.#list.size;
   }
 
   *[Symbol.iterator](): Iterator<PQEntry<K, V>> {
