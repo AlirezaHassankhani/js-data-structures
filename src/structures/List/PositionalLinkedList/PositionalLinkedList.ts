@@ -26,12 +26,12 @@ export class PositionalLinkedList<T> extends Collection<T> {
 
   before(p: Position<T>): Position<T> | null {
     const node = this.validate(p);
-    return node.prev;
+    return this.position(node.prev!);
   }
 
   after(p: Position<T>): Position<T> | null {
     const node = this.validate(p);
-    return node.next;
+    return this.position(node.next!);
   }
 
   #addBetween(
@@ -87,13 +87,11 @@ export class PositionalLinkedList<T> extends Collection<T> {
   remove(p: Position<T>): T | null {
     const node = this.validate(p);
 
-    let predecessor = node.prev;
-    let successor = node.next;
+    const predecessor = node.prev;
+    const successor = node.next;
 
-    if (predecessor && successor) {
-      predecessor.next = successor;
-      successor.prev = predecessor;
-    }
+    predecessor!.next = successor;
+    successor!.prev = predecessor;
 
     this.#size--;
     const answer = node.element;
